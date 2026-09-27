@@ -1,0 +1,18 @@
+venv/
+resultados/
+__pycache__/
+*.pt
+*.onnx
+*.pyc
+.EasyOCR/
+
+# Datasets y salidas locales
+datasets/
+notebooks/
+*.mp4
+*.avi
+.vscode/
+.idea/
+
+# Pesos entrenados que sí se incluyen
+!modelos/pesos/*.pt

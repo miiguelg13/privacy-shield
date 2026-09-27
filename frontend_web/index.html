@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="oscuro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Shield</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header-bar">
+        <div class="logo-wrap">
+            <h1 class="logo-titulo">Privacy Shield</h1>
+        </div>
+        <button class="btn-tema" id="btnTema">
+            <svg class="icono-tema" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+            <span id="textoTema">Oscuro</span>
+        </button>
+    </div>
+
+    <!-- Contenedor principal -->
+    <div class="contenedor">
+
+        <!-- Pestañas -->
+        <div class="pestanas">
+            <button class="pestana activa" data-tab="imagen">Imagen</button>
+            <button class="pestana" data-tab="video">Vídeo</button>
+            <button class="pestana" data-tab="directo">Directo</button>
+        </div>
+
+        <div class="tab-content activa" id="tab-imagen">
+            <div class="panel-superior">
+                <h2>Análisis de imagen</h2>
+                <div class="zona-subida" id="zonaSubidaImagen">
+                    <p>Arrastra una imagen aquí o haz clic para seleccionar</p>
+                </div>
+                <div id="panelArchivoImagen" class="oculto" style="display:flex; gap:10px; margin-bottom:16px;"></div>
+                <div class="opciones">
+                    <label><input type="checkbox" id="checkCarasImagen" checked> Censurar caras</label>
+                    <label><input type="checkbox" id="checkMatriculasImagen" checked> Censurar matrículas</label>
+                    <label><input type="checkbox" id="checkTextoImagen"> Censurar texto sensible</label>
+                    <div class="separador-opciones"></div>
+                    <label><input type="radio" name="modoImagen" id="modoBlurImagen" value="blur" checked> Blur</label>
+                    <label><input type="radio" name="modoImagen" id="modoNegroImagen" value="negro"> Negro</label>
+                </div>
+            </div>
+            <div class="panel-acciones">
+                <button class="btn-principal" id="btnAnalizarImagen" disabled>Analizar</button>
+                <div class="separador-btn"></div>
+                <a class="btn-secundario oculto" id="btnDescargarImagen" download>Descargar</a>
+                <button class="btn-secundario oculto" id="btnReporteImagen">Reporte PDF</button>
+            </div>
+            <div id="selectorCarasImagen" class="oculto">
+                <div class="selector-caras-header">
+                    <h3>Caras a excluir del censado</h3>
+                    <p class="selector-caras-sub">Haz clic en una cara para excluirla. Las demás se censurarán al analizar.</p>
+                </div>
+                <div class="selector-caras-contenido">
+                    <div class="preview-container"><img id="imagenPreviewSelector" src="" alt="preview"></div>
+                    <div id="listaCarasImagen" class="lista-caras"></div>
+                </div>
+            </div>
+            <div id="cargandoImagen" class="oculto">
+                <div class="barra-progreso-wrap">
+                    <div class="barra-progreso-header">
+                        <span id="textoCargandoImagen">Analizando...</span>
+                        <span id="contadorTiempoImagen">0s</span>
+                    </div>
+                    <div class="barra-progreso"><div class="barra-progreso-fill"></div></div>
+                </div>
+            </div>
+            <div id="resultadoImagen" class="oculto">
+                <div class="panel-stats panel-stats-5">
+                    <div class="stat-item"><span class="stat-valor" id="statCarasImagen">0</span><span class="stat-label">Caras</span></div>
+                    <div class="stat-item"><span class="stat-valor" id="statMatriculasImagen">0</span><span class="stat-label">Matrículas</span></div>
+                    <div class="stat-item"><span class="stat-valor" id="statTextosImagen">0</span><span class="stat-label">Textos</span></div>
+                    <div class="stat-item"><span class="stat-valor" id="statTiempoImagen">0s</span><span class="stat-label">Tiempo</span></div>
+                    <div class="stat-item stat-riesgo" id="statRiesgoImagen"><span class="stat-valor" id="valorRiesgoImagen">—</span><span class="stat-label">Riesgo</span></div>
+                </div>
+                <div class="imagenes">
+                    <div class="imagen-wrap"><p>Original</p><img id="imagenOriginal" src="" alt="original"></div>
+                    <div class="imagen-wrap"><p>Anonimizada</p><img id="imagenResultado" src="" alt="anonimizada"></div>
+                </div>
+                <div class="detecciones">
+                    <h3>Detecciones</h3>
+                    <div id="listaDeteccionesImagen" class="timeline-compacto"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="tab-video">
+            <div class="panel-superior">
+                <h2>Análisis de vídeo</h2>
+                <div class="zona-subida" id="zonaSubidaVideo">
+                    <p>Arrastra un vídeo aquí o haz clic para seleccionar</p>
+                </div>
+                <div id="panelArchivoVideo" class="oculto" style="display:flex; gap:10px; margin-bottom:16px;"></div>
+                <div class="opciones">
+                    <label><input type="checkbox" id="checkCarasVideo" checked> Censurar caras</label>
+                    <label><input type="checkbox" id="checkMatriculasVideo" checked> Censurar matrículas</label>
+                    <div class="separador-opciones"></div>
+                    <label><input type="radio" name="modoVideo" id="modoBlurVideo" value="blur" checked> Blur</label>
+                    <label><input type="radio" name="modoVideo" id="modoNegroVideo" value="negro"> Negro</label>
+                </div>
+            </div>
+            <div id="selectorCaras" class="oculto">
+                <div class="selector-caras-header">
+                    <h3>Caras a excluir del censado</h3>
+                    <p class="selector-caras-sub">Navega por el vídeo y haz clic en una cara para excluirla. Las exclusiones se mantienen al cambiar de escena.</p>
+                </div>
+                <div class="selector-segundo">
+                    <label>Momento del vídeo</label>
+                    <div class="slider-container">
+                        <input type="range" id="sliderSegundo" min="0" max="100" value="0" step="1">
+                        <div class="slider-labels">
+                            <span id="labelSegundoActual">00:00</span>
+                            <span id="labelSegundoTotal">00:00</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="selector-caras-contenido">
+                    <div class="preview-container"><img id="imagenPreview" src="" alt="preview"></div>
+                    <div id="listaCaras" class="lista-caras"></div>
+                </div>
+            </div>
+            <div class="panel-acciones">
+                <button class="btn-principal" id="btnAnalizarVideo" disabled>Analizar</button>
+                <div class="separador-btn"></div>
+                <a class="btn-secundario oculto" id="btnDescargarVideo" download>Descargar</a>
+            </div>
+            <div id="cargandoVideo" class="oculto">
+                <div class="barra-progreso-wrap">
+                    <div class="barra-progreso-header">
+                        <span id="textoCargandoVideo">Procesando vídeo...</span>
+                        <span id="contadorFramesVideo" style="font-family:'Syne',sans-serif; color:var(--accent-bright); font-size:13px; font-weight:600;">Preparando...</span>
+                    </div>
+                    <div class="barra-progreso"><div class="barra-progreso-fill" id="barraVideoFill"></div></div>
+                </div>
+            </div>
+            <div id="resultadoVideo" class="oculto">
+                <div class="panel-stats">
+                    <div class="stat-item"><span class="stat-valor" id="statCarasVideo">0</span><span class="stat-label">Caras</span></div>
+                    <div class="stat-item"><span class="stat-valor" id="statMatriculasVideo">0</span><span class="stat-label">Matrículas</span></div>
+                    <div class="stat-item"><span class="stat-valor" id="statTiempoVideo">0s</span><span class="stat-label">Tiempo</span></div>
+                    <div class="stat-item stat-riesgo" id="statRiesgoVideo"><span class="stat-valor" id="valorRiesgoVideo">—</span><span class="stat-label">Riesgo</span></div>
+                </div>
+                <div class="imagenes">
+                    <div class="imagen-wrap"><p>Vídeo original</p><video id="videoOriginal" controls></video></div>
+                    <div class="imagen-wrap"><p>Vídeo anonimizado</p><video id="videoResultado" controls></video></div>
+                </div>
+                <div class="detecciones">
+                    <h3>Timeline de incidencias</h3>
+                    <div id="listaDeteccionesVideo" class="timeline-compacto"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="tab-directo">
+            <div class="panel-superior">
+                <h2>Anonimización en directo</h2>
+                <p style="font-size:13px; color:var(--text-muted); margin-bottom:20px;">La webcam se procesa en tiempo real. Las caras y matrículas se censuran con negro opaco.</p>
+                <div class="opciones">
+                    <label><input type="checkbox" id="checkCarasDirecto" checked> Censurar caras</label>
+                    <label><input type="checkbox" id="checkMatriculasDirecto" checked> Censurar matrículas</label>
+                </div>
+            </div>
+            <div class="panel-acciones">
+                <button class="btn-principal" id="btnIniciarDirecto">Iniciar webcam</button>
+                <button class="btn-secundario oculto" id="btnPararDirecto">Detener</button>
+                <button class="btn-secundario oculto" id="btnSeleccionarCarasDirecto">Seleccionar caras a excluir</button>
+            </div>
+            <div class="directo-contenido oculto" id="directoContenido">
+                <div class="imagenes">
+                    <div class="imagen-wrap">
+                        <p>Cámara original</p>
+                        <video id="videoWebcam" autoplay muted playsinline></video>
+                    </div>
+                    <div class="imagen-wrap">
+                        <p>Anonimizado</p>
+                        <img id="frameDirecto" src="" alt="directo">
+                    </div>
+                </div>
+                <canvas id="canvasCaptura" style="display:none;"></canvas>
+                <div style="text-align:center; margin-top:12px;">
+                    <span id="fpsDirecto" style="font-size:12px; color:var(--text-muted);">Latencia: --</span>
+                </div>
+                <div id="selectorCarasDirecto" class="oculto" style="margin-top:20px; border-top:1px solid var(--border); padding-top:20px;">
+                    <div class="selector-caras-header" style="display:flex; align-items:flex-start; justify-content:space-between; gap:12px;">
+                        <div>
+                            <h3>Caras excluidas del censado</h3>
+                            <p class="selector-caras-sub">Captura tomada en el momento de pulsar el botón. Haz clic en una cara para excluirla.</p>
+                        </div>
+                        <button class="btn-secundario" id="btnRefrescarDirecto" style="white-space:nowrap; flex-shrink:0;">Refrescar frame</button>
+                    </div>
+                    <div class="selector-caras-contenido">
+                        <div class="preview-container"><img id="imagenPreviewDirecto" src="" alt="preview directo"></div>
+                        <div id="listaCarasDirecto" class="lista-caras"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="app.js"></script>
+
+</body>
+</html>
