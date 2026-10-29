@@ -71,7 +71,7 @@ cd frontend_web
 python -m http.server 3000
 ```
 
-Abre <http://localhost:3000>.
+Abre <http://localhost:3000>. La documentación interactiva de la API (FastAPI) está en <http://localhost:8000/docs>.
 
 > Sin GPU, instala la versión de PyTorch para CPU (quita `+cu124` de `torch`, `torchvision` y `torchaudio` en `requirements.txt`). El procesado de vídeo será bastante más lento.
 
